@@ -29,6 +29,8 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       return true
     elseif string.match(url, "twimg%.com") then
       return true
+    elseif string.match(url, "advertise%.twitpic%.com") then
+      return false
     elseif not string.match(url, "twitpic%.com") then
       if ishtml == 1 then
         if string.match(parenturl, "twitpic%.com") then
@@ -49,6 +51,8 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       return true
     elseif string.match(url, "twimg%.com") then
       return true
+    elseif string.match(url, "advertise%.twitpic%.com") then
+      return false
     elseif not string.match(url, "twitpic%.com") then
       if ishtml == 1 then
         if string.match(parenturl, "twitpic%.com") then
@@ -69,6 +73,8 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       return true
     elseif string.match(url, "twimg%.com") then
       return true
+    elseif string.match(url, "advertise%.twitpic%.com") then
+      return false
     -- Check if we are on the last page of a tag
     elseif string.match(url, "twitpic%.com/tag/[^%?]+%?page=[0-9]+") then
       if not html then
