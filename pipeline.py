@@ -58,7 +58,7 @@ if not WGET_LUA:
 # It will be added to the WARC files and reported to the tracker.
 VERSION = "20140903.02"
 USER_AGENT = 'ArchiveTeam'
-TRACKER_ID = 'verizon'
+TRACKER_ID = 'twitpic'
 TRACKER_HOST = 'tracker.archiveteam.org'
 
 
@@ -145,7 +145,7 @@ def get_hash(filename):
 
 CWD = os.getcwd()
 PIPELINE_SHA1 = get_hash(os.path.join(CWD, 'pipeline.py'))
-LUA_SHA1 = get_hash(os.path.join(CWD, 'verizon.lua'))
+LUA_SHA1 = get_hash(os.path.join(CWD, 'twitpic.lua'))
 
 
 def stats_id_function(item):
@@ -165,7 +165,7 @@ class WgetArgs(object):
             WGET_LUA,
             "-U", USER_AGENT,
             "-nv",
-            "--lua-script", "verizon.lua",
+            "--lua-script", "twitpic.lua",
             "-o", ItemInterpolation("%(item_dir)s/wget.log"),
             "--no-check-certificate",
             "--output-document", ItemInterpolation("%(item_dir)s/wget.tmp"),
@@ -180,11 +180,11 @@ class WgetArgs(object):
             "--tries", "inf",
             "--span-hosts",
             "--waitretry", "30",
-            "--domains", "mysite.verizon.net,members.bellatlantic.net",
+            "--domains", "twitpic.com",
             "--warc-file", ItemInterpolation("%(item_dir)s/%(warc_file_base)s"),
             "--warc-header", "operator: Archive Team",
-            "--warc-header", "verizon-dld-script-version: " + VERSION,
-            "--warc-header", ItemInterpolation("verizon-user: %(item_name)s"),
+            "--warc-header", "twitpic-dld-script-version: " + VERSION,
+            "--warc-header", ItemInterpolation("twitpic-user: %(item_name)s"),
         ]
         
         item_name = item['item_name']
@@ -194,86 +194,49 @@ class WgetArgs(object):
         item['item_type'] = item_type
         item['item_value'] = item_value
         
-        assert item_type in ('verizon', 'bellatlantic', 'bellatlantic36pack', 'verizon36pack')
+        assert item_type in ('image')
         
-        if item_type == 'verizon':
-            wget_args.append('http://mysite.verizon.net/{0}/'.format(item_value))
-        elif item_type == 'bellatlantic':
-            wget_args.append('http://members.bellatlantic.net/{0}/'.format(item_value))
-        elif item_type == 'bellatlantic36pack':
-            wget_args.append('http://members.bellatlantic.net/{0}0/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}1/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}2/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}3/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}4/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}5/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}6/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}7/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}8/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}9/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}a/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}b/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}c/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}d/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}e/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}f/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}g/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}h/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}i/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}j/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}k/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}l/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}m/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}n/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}o/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}p/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}q/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}r/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}s/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}t/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}u/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}v/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}w/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}x/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}y/'.format(item_value))
-            wget_args.append('http://members.bellatlantic.net/{0}z/'.format(item_value))
-        elif item_type == 'verizon36pack':
-            wget_args.append('http://mysite.verizon.net/{0}0/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}1/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}2/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}3/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}4/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}5/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}6/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}7/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}8/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}9/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}a/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}b/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}c/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}d/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}e/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}f/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}g/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}h/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}i/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}j/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}k/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}l/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}m/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}n/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}o/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}p/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}q/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}r/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}s/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}t/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}u/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}v/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}w/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}x/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}y/'.format(item_value))
-            wget_args.append('http://mysite.verizon.net/{0}z/'.format(item_value))
+        if item_type == 'picture':
+            wget_args.append('http://twitpic.com/{0}0/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}1/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}2/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}3/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}4/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}5/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}6/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}7/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}8/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}9/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}a/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}b/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}c/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}d/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}e/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}f/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}g/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}h/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}i/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}j/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}k/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}l/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}m/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}n/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}o/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}p/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}q/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}r/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}s/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}t/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}u/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}v/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}w/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}x/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}y/'.format(item_value))
+            wget_args.append('http://twitpic.com/{0}z/'.format(item_value))
+        elif item_type == 'user':
+            
+        elif item_type == 'hashtag':
+            
         else:
             raise Exception('Unknown item')
         
@@ -306,7 +269,7 @@ pipeline = Pipeline(
     CheckIP(),
     GetItemFromTracker("http://%s/%s" % (TRACKER_HOST, TRACKER_ID), downloader,
         VERSION),
-    PrepareDirectories(warc_prefix="verizon"),
+    PrepareDirectories(warc_prefix="twitpic"),
     WgetDownload(
         WgetArgs(),
         max_tries=2,
