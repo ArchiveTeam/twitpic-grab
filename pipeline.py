@@ -181,7 +181,7 @@ class WgetArgs(object):
             "--tries", "inf",
             "--span-hosts",
             "--waitretry", "30",
-            "--domains", "twitpic.com",
+            "--domains", "twitpic.com,cloudfront.net,twimg.com",
             "--warc-file", ItemInterpolation("%(item_dir)s/%(warc_file_base)s"),
             "--warc-header", "operator: Archive Team",
             "--warc-header", "twitpic-dld-script-version: " + VERSION,
@@ -195,9 +195,9 @@ class WgetArgs(object):
         item['item_type'] = item_type
         item['item_value'] = item_value
         
-        assert item_type in ('image')
+        assert item_type in ('image', 'user', 'tag')
         
-        if item_type == 'picture':
+        if item_type == 'image':
             wget_args.append('http://twitpic.com/{0}0/'.format(item_value))
             wget_args.append('http://twitpic.com/{0}1/'.format(item_value))
             wget_args.append('http://twitpic.com/{0}2/'.format(item_value))
@@ -235,9 +235,9 @@ class WgetArgs(object):
             wget_args.append('http://twitpic.com/{0}y/'.format(item_value))
             wget_args.append('http://twitpic.com/{0}z/'.format(item_value))
         elif item_type == 'user':
-            
-        elif item_type == 'hashtag':
-            
+            wget_args.append('http://twitpic.com/photos/{0}'.format(item_value))
+        elif item_type == 'tag':
+            wget_args.append('http://twitpic.com/tag/{0}'.format(item_value))
         else:
             raise Exception('Unknown item')
         
