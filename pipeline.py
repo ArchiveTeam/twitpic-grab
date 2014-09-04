@@ -182,7 +182,7 @@ class WgetArgs(object):
             "--tries", "inf",
             "--span-hosts",
             "--waitretry", "30",
-            "--domains", "twitpic.com,cloudfront.net,twimg.com",
+            "--domains", "twitpic.com,cloudfront.net,twimg.com,amazonaws.com",
             "--warc-file", ItemInterpolation("%(item_dir)s/%(warc_file_base)s"),
             "--warc-header", "operator: Archive Team",
             "--warc-header", "twitpic-dld-script-version: " + VERSION,
