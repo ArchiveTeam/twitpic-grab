@@ -328,14 +328,13 @@ class WgetArgs(object):
 # This will be shown in the warrior management panel. The logo should not
 # be too big. The deadline is optional.
 project = Project(
-    title="Verizon",
+    title="Twitpic",
     project_html="""
-        <img class="project-logo" alt="Project logo" src="http://archiveteam.org/images/thumb/b/bc/Verizon_Logo.png/320px-Verizon_Logo.png" height="50px" title=""/>
-        <h2>mysite.verizon.net <span class="links"><a href="http://mysite.verizon.net/">Website</a> &middot; <a href="http://tracker.archiveteam.org/verizon/">Leaderboard</a></span></h2>
-        <h2>members.bellatlantic.net <span class="links"><a href="htp://members.bellatlantic.net/">Website</a> &middot; <a href="http://tracker.archiveteam.org/verizon/">Leaderboard</a></span></h2>
-        <p>Archiving websites from mysite.verizon.net and members.bellatlantic.net.</p>
+        <img class="project-logo" alt="Project logo" src="http://archiveteam.org/images/6/68/Twitpic-logo.png" height="50px" title=""/>
+        <h2>twitpic.com <span class="links"><a href="http://twitpic.com/">Website</a> &middot; <a href="http://tracker.archiveteam.org/twitpic/">Leaderboard</a></span></h2>
+        <p>Archiving images and webpages from twitpic.com.</p>
     """,
-    utc_deadline=datetime.datetime(2014, 9, 30, 23, 59, 0)
+    utc_deadline=datetime.datetime(2014, 9, 25, 23, 59, 0)
 )
 
 pipeline = Pipeline(
