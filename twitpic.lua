@@ -61,7 +61,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     else
       return false
     end
-  elseif item_type == "hashtag" then
+  elseif item_type == "tag" then
     if string.match(url, "cloudfront%.net") then
       return true
     elseif string.match(url, "twimg%.com") then
@@ -97,7 +97,8 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
   if status_code >= 500 or
     (status_code >= 400 and status_code ~= 404 and status_code ~= 403) then
     if string.match(url["host"], "twitpic%.com") or
-      string.match(url["host"], "cloudfront%.net") then
+      string.match(url["host"], "cloudfront%.net") or
+      string.match(url["host"], "twimg%.com") then
       
       io.stdout:write("\nServer returned "..http_stat.statcode..". Sleeping.\n")
       io.stdout:flush()
