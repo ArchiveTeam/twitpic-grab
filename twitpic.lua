@@ -37,6 +37,8 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       return true
     elseif string.match(url, "twimg%.com") then
       return true
+    elseif string.match(url, "amazonaws%.com") then
+      return true
     elseif string.match(url, "advertise%.twitpic%.com") then
       return false
     elseif not string.match(url, "twitpic%.com") then
@@ -59,6 +61,8 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       return true
     elseif string.match(url, "twimg%.com") then
       return true
+    elseif string.match(url, "amazonaws%.com") then
+      return true
     elseif string.match(url, "advertise%.twitpic%.com") then
       return false
     elseif not string.match(url, "twitpic%.com") then
@@ -80,6 +84,8 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     if string.match(url, "cloudfront%.net") then
       return true
     elseif string.match(url, "twimg%.com") then
+      return true
+    elseif string.match(url, "amazonaws%.com") then
       return true
     elseif string.match(url, "advertise%.twitpic%.com") then
       return false
@@ -125,7 +131,8 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
     (status_code >= 400) then
     if string.match(url["host"], "twitpic%.com") or
       string.match(url["host"], "cloudfront%.net") or
-      string.match(url["host"], "twimg%.com") then
+      string.match(url["host"], "twimg%.com") or
+      string.match(url["host"], "amazonaws%.com") then
       
       io.stdout:write("\nServer returned "..http_stat.statcode..". Sleeping.\n")
       io.stdout:flush()
