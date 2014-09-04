@@ -22,7 +22,11 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
 
   -- Skip redirect from mysite.verizon.net and members.bellatlantic.net
   if item_type == "image" then
-    if not string.match(url, "twitpic%.com") then
+    if string.match(url, "cloudfront%.net") then
+      return true
+    elseif string.match(url, "twimg%.com") then
+      return true
+    elseif not string.match(url, "twitpic%.com") then
       if ishtml == 1 then
         if string.match(parenturl, "twitpic%.com") then
           return true
@@ -33,14 +37,16 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
         return true
       end
     elseif string.match(url, item_value) then
-      return true
-    elseif string.match(url, "cloudfront%.net") then
       return true
     else
       return false
     end
   elseif item_type == "user" then
-    if not string.match(url, "twitpic%.com") then
+    if string.match(url, "cloudfront%.net") then
+      return true
+    elseif string.match(url, "twimg%.com") then
+      return true
+    elseif not string.match(url, "twitpic%.com") then
       if ishtml == 1 then
         if string.match(parenturl, "twitpic%.com") then
           return true
@@ -51,14 +57,16 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
         return true
       end
     elseif string.match(url, item_value) then
-      return true
-    elseif string.match(url, "cloudfront%.net") then
       return true
     else
       return false
     end
   elseif item_type == "hashtag" then
-    if not string.match(url, "twitpic%.com") then
+    if string.match(url, "cloudfront%.net") then
+      return true
+    elseif string.match(url, "twimg%.com") then
+      return true
+    elseif not string.match(url, "twitpic%.com") then
       if ishtml == 1 then
         if string.match(parenturl, "twitpic%.com") then
           return true
@@ -69,8 +77,6 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
         return true
       end
     elseif string.match(url, item_value) then
-      return true
-    elseif string.match(url, "cloudfront%.net") then
       return true
     else
       return false
