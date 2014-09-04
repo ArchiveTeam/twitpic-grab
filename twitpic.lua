@@ -19,6 +19,9 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
   local url = urlpos["url"]["url"]
   local ishtml = urlpos["link_expect_html"]
   local parenturl = parent["url"]
+  
+  -- Chfoo - Can I use "local html = nil" in "wget.callbacks.download_child_p"?
+  local html = nil
 
   -- Skip redirect from mysite.verizon.net and members.bellatlantic.net
   if item_type == "image" then
@@ -66,6 +69,16 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       return true
     elseif string.match(url, "twimg%.com") then
       return true
+    -- Check if we are on the last page of a tag
+    elseif string.match(url, "twitpic%.com/tag/selfie%?page=[0-9]+") then
+      if not html then
+        html = read_file(file)
+      end
+      if not string.match(url, '<div class="user%-photo%-content right">') then
+        return false
+      else
+        return verdict
+      end
     elseif not string.match(url, "twitpic%.com") then
       if ishtml == 1 then
         if string.match(parenturl, "twitpic%.com") then
