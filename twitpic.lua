@@ -70,7 +70,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     elseif string.match(url, "twimg%.com") then
       return true
     -- Check if we are on the last page of a tag
-    elseif string.match(url, "twitpic%.com/tag/selfie%?page=[0-9]+") then
+    elseif string.match(url, "twitpic%.com/tag/[^%?]+%?page=[0-9]+") then
       if not html then
         html = read_file(file)
       end
