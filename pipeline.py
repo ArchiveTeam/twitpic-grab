@@ -173,7 +173,8 @@ class WgetArgs(object):
             "-e", "robots=off",
             "--no-cookies",
             "--rotate-dns",
-#            "--recursive", "--level=inf",
+            # Do download recursive, we're checking the urls in twitpic.lua
+            "--recursive", "--level=inf",
             "--no-parent",
             "--page-requisites",
             "--timeout", "30",
