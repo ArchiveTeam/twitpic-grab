@@ -15,14 +15,6 @@ read_file = function(file)
   end
 end
 
-wget.callbacks.get_urls = function(file, url, is_css, iri)
-  local urls = {}
-  local html = nil
-  
-  if string.match(url, "twitpic%.com/[0-9a-z]+") then
-    
-end
-
 wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_parsed, iri, verdict, reason)
   local url = urlpos["url"]["url"]
   local ishtml = urlpos["link_expect_html"]
