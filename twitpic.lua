@@ -77,7 +77,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       if not string.match(url, '<div class="user%-photo%-content right">') then
         return false
       else
-        return verdict
+        return true
       end
     elseif not string.match(url, "twitpic%.com") then
       if ishtml == 1 then
