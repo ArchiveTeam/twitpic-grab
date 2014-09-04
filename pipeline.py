@@ -201,9 +201,9 @@ class WgetArgs(object):
         if item_type == 'image':
             suffixes = string.digits + string.lowercase
 
-            for args in [('http://twitpic.com/%s%s' % (item_value, s), \
-                          'http://twitpic.com/show/thumb/%s%s' % (item_value, s), \
-                          'http://twitpic.com/show/mini/%s%s' % (item_value, s)) for s in suffixes]:
+            for args in [('http://twitpic.com/{0}{1}'.format(item_value, s), \
+                          'http://twitpic.com/show/thumb/{0}{1}'.format(item_value, s), \
+                          'http://twitpic.com/show/mini/{0}{1}'.format(item_value, s)) for s in suffixes]:
                 wget_args.append(args[0])
                 wget_args.append(args[1])
                 wget_args.append(args[2])
