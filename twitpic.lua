@@ -28,7 +28,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
         html = read_file(file)
       end
       
-      for videourl in string.match(html, '<meta name="[^"]+" value="([^"]+)"') do
+      for videourl in string.match(html, '<meta name="twitter:player:stream" value="([^"]+)"') do
         table.insert(urls, { url=videourl })
       end
       
