@@ -43,7 +43,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       if ishtml == 1 then
         return false
       else
-        return true
+        return verdict
       end
     else
       return false
