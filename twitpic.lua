@@ -38,7 +38,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       return false
     elseif string.match(url, '/[^"]+"[^/]+/') then
       return false
-    elseif not string.match(url, "twitpic%.com") and
+    elseif not string.match(url, "twitpic%.com") then
       if ishtml ~= 1 then
         if not reason == "ALREADY_ON_BLACKLIST" then
           return true
