@@ -47,29 +47,32 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       return false
     end
   elseif item_type == "user" then
-    if string.match(url, "cloudfront%.net") then
-      return true
-    elseif string.match(url, "twimg%.com") then
-      return true
-    elseif string.match(url, "amazonaws%.com") then
-      return true
+    if string.match(url, "cloudfront%.net") or
+      string.match(url, "twimg%.com")  or
+      string.match(url, "amazonaws%.com") then
+      return verdict
     elseif string.match(url, "advertise%.twitpic%.com") then
       return false
-    elseif not string.match(url, "twitpic%.com") and
-      ishtml ~= 1 then
-      return true
+    elseif not string.match(url, "twitpic%.com") then
+      if ishtml ~= 1 then
+        return verdict
+      end
+    elseif not string.match(url, item_value) then
+      if ishtml == 1 then
+        return false
+      else
+        return verdict
+      end
     elseif string.match(url, item_value) then
-      return true
+      return verdict
     else
       return false
     end
   elseif item_type == "tag" then
-    if string.match(url, "cloudfront%.net") then
-      return true
-    elseif string.match(url, "twimg%.com") then
-      return true
-    elseif string.match(url, "amazonaws%.com") then
-      return true
+    if string.match(url, "cloudfront%.net") or
+      string.match(url, "twimg%.com")  or
+      string.match(url, "amazonaws%.com") then
+      return verdict
     elseif string.match(url, "advertise%.twitpic%.com") then
       return false
     -- Check if we are on the last page of a tag
@@ -80,13 +83,20 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       if not string.match(url, '<div class="user%-photo%-content right">') then
         return false
       else
-        return true
+        return verdict
       end
-    elseif not string.match(url, "twitpic%.com") and
-      ishtml ~= 1 then
-      return true
+    elseif not string.match(url, "twitpic%.com") then
+      if ishtml ~= 1 then
+        return verdict
+      end
+    elseif not string.match(url, item_value) then
+      if ishtml == 1 then
+        return false
+      else
+        return verdict
+      end
     elseif string.match(url, item_value) then
-      return true
+      return verdict
     else
       return false
     end
