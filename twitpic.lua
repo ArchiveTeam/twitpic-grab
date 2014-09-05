@@ -41,6 +41,8 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       else
         return verdict
       end
+    elseif string.match(url, item_value) then
+      return verdict
     else
       return false
     end
