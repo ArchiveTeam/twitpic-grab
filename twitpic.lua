@@ -20,13 +20,10 @@ end
 
 wget.callbacks.get_urls = function(file, url, is_css, iri)
   local urls = {}
-  local html = nil
   
   if item_type == "image" then
     if string.match(url, "twitpic%.com/"..item_value.."[^/]+/") then
-      if not html then
-        html = read_file(file)
-      end
+      html = read_file(file)
       
       for videourl in string.match(html, '<meta name="twitter:player:stream" value="(http[^"]+)"') do
         table.insert(urls, { url=videourl })
