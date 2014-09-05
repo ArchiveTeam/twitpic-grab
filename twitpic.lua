@@ -40,7 +40,11 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
         return verdict
       end
     elseif not string.match(url, item_value) then
-      return false
+      if ishtml == 1 then
+        return false
+      else
+        return true
+      end
     else
       return false
     end
