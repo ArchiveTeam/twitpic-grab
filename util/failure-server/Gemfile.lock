@@ -37,4 +37,3 @@ PLATFORMS
 DEPENDENCIES
   analysand
   sinatra
-  yajl-ruby
