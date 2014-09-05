@@ -68,8 +68,8 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     else
       return false
     end
-    if string.match(url, "/[^%%]+%%22[^/]+/") or
-      string.match(url, '/[^"]+"[^/]+/') then
+    if string.match(url, "/%%5C%%22[^/]+") or
+      string.match(url, '/[^"]+"[^/]+') then
       return false
     else
       return verdict
