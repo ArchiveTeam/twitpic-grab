@@ -26,11 +26,11 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
   -- Skip redirect from mysite.verizon.net and members.bellatlantic.net
   if item_type == "image" then
     if string.match(url, "cloudfront%.net") then
-      return true
+      return verdict
     elseif string.match(url, "twimg%.com") then
-      return true
+      return verdict
     elseif string.match(url, "amazonaws%.com") then
-      return true
+      return verdict
     elseif string.match(url, "advertise%.twitpic%.com") then
       return false
     elseif string.match(url, "/[^:]+:[^/]+/") then
@@ -39,9 +39,9 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       return false
     elseif not string.match(url, "twitpic%.com") and
       ishtml ~= 1 then
-      return true
-    elseif string.match(url, item_value) then
-      return true
+      return verdict
+    elseif not string.match(url, item_value) then
+      return false
     else
       return false
     end
