@@ -33,10 +33,12 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       end
       
       for videosource in string.match(html, '<source src="(http[^"]+)"') do
-        table.insert(url, { url=videosource })
+        table.insert(urls, { url=videosource })
       end
     end
   end
+  
+  return urls
 end
 
 wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_parsed, iri, verdict, reason)
