@@ -22,7 +22,10 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
   local urls = {}
   
   if item_type == "image" then
-    if string.match(url, "twitpic%.com/"..item_value.."[^/]+/") then
+    
+    twitpicurl = "twitpic%.com/"..item_value
+    
+    if string.match(url, twitpicurl) then
       html = read_file(file)
       
       for videourl in string.gmatch(html, '<meta name="twitter:player:stream" value="(http[^"]+)"') do
@@ -48,8 +51,8 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
   local html = nil
 
   if item_type == "image" then
-    if string.match(url, "/%%5C%%22[^/]+") or
-      string.match(url, '/[^"]+"[^/]+') then
+    if string.match(url, "/%%5C%%22") or
+      string.match(url, '/[^"]+"') then
       return false
     elseif string.match(url, "cloudfront%.net") or
       string.match(url, "twimg%.com")  or
