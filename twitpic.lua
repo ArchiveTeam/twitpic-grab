@@ -124,7 +124,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
   io.stdout:write(url_count .. "=" .. status_code .. " " .. url["url"] .. ".  \r")
   io.stdout:flush()
   if status_code >= 500 or
-    (status_code >= 400) then
+    (status_code >= 400 and status_code ~= 404 and status_code ~= 403) then
     if string.match(url["host"], "twitpic%.com") or
       string.match(url["host"], "cloudfront%.net") or
       string.match(url["host"], "twimg%.com") or
