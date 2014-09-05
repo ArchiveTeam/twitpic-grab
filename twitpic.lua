@@ -37,16 +37,9 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       return false
     elseif string.match(url, '/[^"]+"[^/]+/') then
       return false
-    elseif not string.match(url, "twitpic%.com") then
-      if ishtml == 1 then
-        if string.match(parenturl, "twitpic%.com") then
-          return true
-        else
-          return false
-        end
-      else
-        return true
-      end
+    elseif not string.match(url, "twitpic%.com") and
+      ishtml ~= 1 then
+      return true
     elseif string.match(url, item_value) then
       return true
     else
@@ -61,16 +54,9 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       return true
     elseif string.match(url, "advertise%.twitpic%.com") then
       return false
-    elseif not string.match(url, "twitpic%.com") then
-      if ishtml == 1 then
-        if string.match(parenturl, "twitpic%.com") then
-          return true
-        else
-          return false
-        end
-      else
-        return true
-      end
+    elseif not string.match(url, "twitpic%.com") and
+      ishtml ~= 1 then
+      return true
     elseif string.match(url, item_value) then
       return true
     else
@@ -95,16 +81,9 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       else
         return true
       end
-    elseif not string.match(url, "twitpic%.com") then
-      if ishtml == 1 then
-        if string.match(parenturl, "twitpic%.com") then
-          return true
-        else
-          return false
-        end
-      else
-        return true
-      end
+    elseif not string.match(url, "twitpic%.com") and
+      ishtml ~= 1 then
+      return true
     elseif string.match(url, item_value) then
       return true
     else
@@ -140,7 +119,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
       if tries >= 5 then
         io.stdout:write("\nI give up...\n")
         io.stdout:flush()
-        return wget.actions.ABORT
+        return wget.actions.NOTHING
       else
         return wget.actions.CONTINUE
       end
