@@ -33,6 +33,8 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       return true
     elseif string.match(url, "advertise%.twitpic%.com") then
       return false
+    elseif string.match(url, "/[^:]:[^/]/") then
+      return false
     elseif not string.match(url, "twitpic%.com") then
       if ishtml == 1 then
         if string.match(parenturl, "twitpic%.com") then
