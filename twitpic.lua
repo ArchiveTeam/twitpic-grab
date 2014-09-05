@@ -2,6 +2,9 @@ local url_count = 0
 local tries = 0
 local item_type = os.getenv('item_type')
 local item_value = os.getenv('item_value')
+dofile("urlcode.lua")
+dofile("table_show.lua")
+JSON = (loadfile "JSON.lua")()
 
 
 read_file = function(file)
@@ -13,6 +16,26 @@ read_file = function(file)
   else
     return ""
   end
+end
+
+wget.callbacks.get_urls = function(file, url, is_css, iri)
+  local urls = {}
+  local html = nil
+  
+  if item_type == "image" then
+    if string.match(url, "twitpic%.com/[^/]+/") then
+      if not html then
+        html = read_file(file)
+      end
+      
+      for videourl in string.match(html, '<meta name="[^"]+" value="([^"]+)"') do
+        table.insert(urls, { url=videourl })
+      end
+      
+      for videosource in string.match(html, '<source src="([^"]+)"') do
+        table.insert(url, { url=videosource })
+      end
+    end
 end
 
 wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_parsed, iri, verdict, reason)
