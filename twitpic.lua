@@ -23,7 +23,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
   local html = nil
   
   if item_type == "image" then
-    if string.match(url, "twitpic%.com/[^/]+/") then
+    if string.match(url, "twitpic%.com/"..item_value.."[^/]+/") then
       if not html then
         html = read_file(file)
       end
