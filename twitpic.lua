@@ -128,7 +128,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
       string.match(url["host"], "twimg%.com") or
       string.match(url["host"], "amazonaws%.com") then
       
-      io.stdout:write("\nServer returned "..http_stat.statcode.." for" .. url["url"] .. ". Sleeping.\n")
+      io.stdout:write("\nServer returned "..http_stat.statcode.." for " .. url["url"] .. ". Sleeping.\n")
       io.stdout:flush()
       
       os.execute("sleep 10")
