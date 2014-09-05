@@ -50,12 +50,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     if string.match(url, "cloudfront%.net") or
       string.match(url, "twimg%.com")  or
       string.match(url, "amazonaws%.com") then
-      if string.match(url, "/[^%%]+%%22[^/]+/") or
-        string.match(url, '/[^"]+"[^/]+/') then
-        return false
-      else
-        return verdict
-      end
+      return verdict
     elseif string.match(url, "advertise%.twitpic%.com") then
       return false
     elseif not string.match(url, "twitpic%.com") then
@@ -72,6 +67,12 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       return verdict
     else
       return false
+    end
+    if string.match(url, "/[^%%]+%%22[^/]+/") or
+      string.match(url, '/[^"]+"[^/]+/') then
+      return false
+    else
+      return verdict
     end
   elseif item_type == "user" then
     if string.match(url, "cloudfront%.net") or
