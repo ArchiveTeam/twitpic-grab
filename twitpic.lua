@@ -42,6 +42,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
   local url = urlpos["url"]["url"]
   local ishtml = urlpos["link_expect_html"]
   local parenturl = parent["url"]
+  local wgetreason = reason
   
   -- Chfoo - Can I use "local html = nil" in "wget.callbacks.download_child_p"?
   local html = nil
@@ -53,7 +54,11 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     elseif string.match(url, "cloudfront%.net") or
       string.match(url, "twimg%.com")  or
       string.match(url, "amazonaws%.com") then
-      return verdict
+      if wgetreason == "ALREADY_ON_BLACKLIST" then
+        return false
+      else
+        return verdict
+      end
     elseif string.match(url, "advertise%.twitpic%.com") then
       return false
     elseif not string.match(url, "twitpic%.com") then
