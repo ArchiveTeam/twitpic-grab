@@ -46,12 +46,16 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
   -- Chfoo - Can I use "local html = nil" in "wget.callbacks.download_child_p"?
   local html = nil
 
-  -- Skip redirect from mysite.verizon.net and members.bellatlantic.net
   if item_type == "image" then
     if string.match(url, "cloudfront%.net") or
       string.match(url, "twimg%.com")  or
       string.match(url, "amazonaws%.com") then
-      return verdict
+      if string.match(url, "/[^%%]+%%22[^/]+/") or
+        string.match(url, '/[^"]+"[^/]+/') then
+        return false
+      else
+        return verdict
+      end
     elseif string.match(url, "advertise%.twitpic%.com") then
       return false
     elseif not string.match(url, "twitpic%.com") then
