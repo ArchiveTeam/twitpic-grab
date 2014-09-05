@@ -36,6 +36,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
         table.insert(url, { url=videosource })
       end
     end
+  end
 end
 
 wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_parsed, iri, verdict, reason)
