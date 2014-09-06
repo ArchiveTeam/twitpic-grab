@@ -7,6 +7,17 @@ dofile("table_show.lua")
 dofile("failure_report.lua")
 JSON = (loadfile "JSON.lua")()
 
+load_json_file = function(file)
+  if file then
+    local f = io.open(file)
+    local data = f:read("*all")
+    f:close()
+    return JSON:decode(data)
+  else
+    return nil
+  end
+end
+
 read_file = function(file)
   if file then
     local f = assert(io.open(file))
@@ -57,15 +68,15 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
         end
       end
       
-      for avatar_url in string.gmatch(html, '"avatar_url":"(http[^"]+)"') do
-        local avatarurl = string.gsub(avatar_url, "\/", "/")
-        table.insert(urls, { url=avatarurl })
-      end
+--      for avatar_url in string.gmatch(html, '"avatar_url":"(http[^"]+)"') do
+--        local avatarurl = string.gsub(avatar_url, "\/", "/")
+--        table.insert(urls, { url=avatarurl })
+--      end
       
-      for profile_background_image_url in string.gmatch(html, '"profile_background_image_url":"(http[^"]+)"') do
-        local backgroundimageurl = string.gsub(profile_background_image_url, "\/", "/")
-        table.insert(urls, { url=backgroundimageurl })
-      end
+--      for profile_background_image_url in string.gmatch(html, '"profile_background_image_url":"(http[^"]+)"') do
+--        local backgroundimageurl = string.gsub(profile_background_image_url, "\/", "/")
+--        table.insert(urls, { url=backgroundimageurl })
+--      end
       
     elseif string.match(url, "twitpic%.com/"..item_value.."[0-9a-z]") then
       html = read_file(file)
