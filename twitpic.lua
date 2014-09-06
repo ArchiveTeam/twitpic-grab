@@ -34,30 +34,23 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
     if string.match(url, twitpicurl) then
       html = read_file(file)
       
-      if string.match(html, '<meta name="twitter:player:stream" value="http[^"]+"') then
-        for videourl in string.gmatch(html, '<meta name="twitter:player:stream" value="(http[^"]+)"') do
-          table.insert(urls, { url=videourl })
-        end
+      for videourl in string.gmatch(html, '<meta name="twitter:player:stream" value="(http[^"]+)"') do
+        table.insert(urls, { url=videourl })
       end
       
-      if string.match(html, '<source src="(http[^"]+)"') then
-        for videosource in string.gmatch(html, '<source src="(http[^"]+)"') do
-          table.insert(urls, { url=videosource })
-        end
+      for videosource in string.gmatch(html, '<source src="(http[^"]+)"') do
+        table.insert(urls, { url=videosource })
       end
       
-      if string.match(html, '<meta name="twitter:image" value="(http[^"]+)"') then
-        for imageurl in string.gmatch(html, '<meta name="twitter:image" value="(http[^"]+)"') do
-          table.insert(urls, { url=videosource })
-        end
+      for imageurl in string.gmatch(html, '<meta name="twitter:image" value="(http[^"]+)"') do
+        table.insert(urls, { url=videosource })
       end
       
-      if string.match(html, '<div class="[^"]+" data-id="[0-9]+">') then
-        for commentid in string.gmatch(html, '<div class="[^"]+" data-id="[0-9]+">') do
-          commenturl = "http://twitpic.com/comments/show.json?media_id="..item_value.."&last_seen="..commentid
-          table.insert(urls, { url=commenturl })
-        end
+      for commentid in string.gmatch(html, '<div class="[^"]+" data-id="[0-9]+">') do
+        commenturl = "http://twitpic.com/comments/show.json?media_id="..item_value.."&last_seen="..commentid
+        table.insert(urls, { url=commenturl })
       end
+      
     end
   elseif item_type == "tag" then
     
