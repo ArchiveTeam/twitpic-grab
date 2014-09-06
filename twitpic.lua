@@ -2,7 +2,6 @@ local url_count = 0
 local tries = 0
 local item_type = os.getenv('item_type')
 local item_value = os.getenv('item_value')
-local tagpage = 1
 dofile("urlcode.lua")
 dofile("table_show.lua")
 dofile("failure_report.lua")
@@ -113,15 +112,28 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
         for baseurl in string.gmatch(url, "(http://twitpic%.com/tag/[0-9a-zA-Z]+)") do
           for nextpage in string.gmatch(html, '<div class="right">[^<]+<a href="(%?[^"]+)">[^<]+</a>[^<]+</div>') do
             table.insert(urls, { url=(baseurl.."/"..nextpage) })
+            table.insert(urls, { url=(baseurl..nextpage) })
           end
           
           for prevpage in string.gmatch(html, '<div class="left">[^<]+<a href="(%?[^"]+)">[^<]+</a>[^<]+</div>') do
             table.insert(urls, { url=(baseurl.."/"..prevpage) })
+            table.insert(urls, { url=(baseurl..prevpage) })
           end
         end 
+      else
+        local page = string.match(url, "http://twitpic%.com/tag/[0-9a-zA-Z]+[/]?&page=([0-9]+)")
+        local tagid = string.match(url, "http://twitpic%.com/tag/([0-9a-zA-Z]+)[/]?&page=[0-9]+")
+        local prevpage = page - 1
+        local nextpage = page + 1
+        local prevurlslash = "http://twitpic.com/tag/"..tagid.."/&page="..prevpage
+        local prevurl = "http://twitpic.com/tag/"..tagid.."&page="..prevpage
+        local nexturlslash = "http://twitpic.com/tag/"..tagid.."/&page="..nextpage
+        local nexturl = "http://twitpic.com/tag/"..tagid.."&page="..nextpage
+        downloaded[prevurlslash] = true
+        downloaded[prevurl] = true
+        downloaded[nexturlslash] = true
+        downloaded[nexturl] = true
       end
-    else
-      tagpage = 0
     end
   end
   
