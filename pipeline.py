@@ -204,11 +204,13 @@ class WgetArgs(object):
             for args in [('http://twitpic.com/{0}{1}'.format(item_value, s), \
                           'http://twitpic.com/show/thumb/{0}{1}'.format(item_value, s), \
                           'http://api.twitpic.com/2/media/show.json?id={0}{1}'.format(item_value, s), \
-                          'http://api.twitpic.com/2/comments/show.json?media_id={0}{1}'.format(item_value, s), \
+                          'http://api.twitpic.com/2/comments/show.json?media_id={0}{1}&page=1'.format(item_value, s), \
                           'http://twitpic.com/show/mini/{0}{1}'.format(item_value, s)) for s in suffixes]:
                 wget_args.append(args[0])
                 wget_args.append(args[1])
                 wget_args.append(args[2])
+                wget_args.append(args[3])
+                wget_args.append(args[4])
 
         elif item_type == 'user':
             wget_args.append('http://twitpic.com/photos/{0}'.format(item_value))
