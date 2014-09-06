@@ -34,8 +34,9 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
     if string.match(url, item_value) then
       html = read_file(file)
       
-      for commentid in string.gmatch(html, '<div class="comment clear" data-id="([0-9]+)">') do
-        table.insert(urls, { url=("http://twitpic.com/comments/show.json?media_id="..item_value.."&last_seen="..commentid) })
+      for commentid in string.gmatch(html, '<div class="comment clear" data%-id="([0-9]+)">') do
+        local item = string.match(url, "twitpic%.com/[^/]+/")
+        table.insert(urls, { url=("http://twitpic.com/comments/show.json?media_id="..item.."&last_seen="..commentid) })
       end
       
       for videourl in string.gmatch(html, '<meta name="twitter:player:stream" value="(http[^"]+)"') do
@@ -49,8 +50,20 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       for imageurl in string.gmatch(html, '<meta name="twitter:image" value="(http[^"]+)"') do
         table.insert(urls, { url=imageurl })
       end
+    end
+    
+    if string.match(url, "http://api.twitpic.com/2/comments/show.json%?media_id=[^&]+&page=[0-9]+") then
+      html = read_file(file)
+      
+      if not string.match(html, '{"total_comments":"[0-9]+","total_pages":[0-9]+}') then
+        local page = string.match(url, "http://api.twitpic.com/2/comments/show.json%?media_id=[^&]+&page=([0-9]+)")
+        local newpage = page + 1
+        local media_id = string.match(url, "http://api.twitpic.com/2/comments/show.json%?media_id=([^&]+)&page=[0-9]+")
+        table.insert(urls, { url=("http://api.twitpic.com/2/comments/show.json%?media_id="..media_id.."+&page="..newpage) })
+      end
       
     end
+    
   elseif item_type == "tag" then
     
     local twitpicurl = "twitpic%.com/tag/"..item_value
