@@ -35,7 +35,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       html = read_file(file)
       
       for commentid in string.gmatch(html, '<div class="comment clear" data%-id="([0-9]+)">') do
-        local item = string.match(url, "twitpic%.com/[^/]+/")
+        local item = string.match(url, "twitpic%.com/([^/]+)/")
         table.insert(urls, { url=("http://twitpic.com/comments/show.json?media_id="..item.."&last_seen="..commentid) })
       end
       
