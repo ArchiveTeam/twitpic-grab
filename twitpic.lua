@@ -29,7 +29,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
   
   if item_type == "image" then
     
-    twitpicurl = "twitpic%.com/"..item_value
+    local twitpicurl = "twitpic%.com/"..item_value
     
     if string.match(url, twitpicurl) then
       html = read_file(file)
@@ -54,7 +54,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
     end
   elseif item_type == "tag" then
     
-    twitpicurl = "twitpic%.com/tag/"..item_value
+    local twitpicurl = "twitpic%.com/tag/"..item_value
     
     if string.match(url, twitpicurl) then
       html = read_file(file)
@@ -150,16 +150,6 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       return verdict
     elseif string.match(url, "advertise%.twitpic%.com") then
       return false
-    -- Check if we are on the last page of a tag
-    elseif string.match(url, "twitpic%.com/tag/[^%?]+%?page=[0-9]+") then
-      if not html then
-        html = read_file(file)
-      end
-      if not string.match(html, '<div class="user%-photo%-content right">') then
-        return false
-      else
-        return verdict
-      end
     elseif not string.match(url, "twitpic%.com") then
       if ishtml ~= 1 then
         return verdict
