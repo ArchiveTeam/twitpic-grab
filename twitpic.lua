@@ -108,14 +108,16 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
     if string.match(url, item_value) then
       html = read_file(file)
       
-      for baseurl in string.gmatch(url, "(http://twitpic%.com/tag/[0-9a-zA-Z]+)") do
-        for nextpage in string.gmatch(html, '<div class="right">[^<]+<a href="(%?[^"]+)">[^<]+</a>[^<]+</div>') do
-          table.insert(urls, { url=(baseurl.."/"..nextpage) })
-        end
-        
-        for prevpage in string.gmatch(html, '<div class="left">[^<]+<a href="(%?[^"]+)">[^<]+</a>[^<]+</div>') do
-          table.insert(urls, { url=(baseurl.."/"..prevpage) })
-        end
+      if not string.match(html, '<div class="user%-photo%-content right">') then
+        for baseurl in string.gmatch(url, "(http://twitpic%.com/tag/[0-9a-zA-Z]+)") do
+          for nextpage in string.gmatch(html, '<div class="right">[^<]+<a href="(%?[^"]+)">[^<]+</a>[^<]+</div>') do
+            table.insert(urls, { url=(baseurl.."/"..nextpage) })
+          end
+          
+          for prevpage in string.gmatch(html, '<div class="left">[^<]+<a href="(%?[^"]+)">[^<]+</a>[^<]+</div>') do
+            table.insert(urls, { url=(baseurl.."/"..prevpage) })
+          end
+        end 
       end
     end
   end
