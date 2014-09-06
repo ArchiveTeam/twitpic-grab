@@ -187,7 +187,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
         return verdict
       end
     elseif string.match(url, "twitpic%.com/tag/[0-9a-zA-Z]+[/]?&page") then
-      if tagpage = 1 then
+      if tagpage == 1 then
         return verdict
       else
         return false
