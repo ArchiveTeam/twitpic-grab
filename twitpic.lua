@@ -58,12 +58,12 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       end
       
       for avatar_url in string.gmatch(html, '"avatar_url":"(http[^"]+)"') do
-        avatarurl = string.gsub(avatar_url, "\/", "/")
+        local avatarurl = string.gsub(avatar_url, "\/", "/")
         table.insert(urls, { url=avatarurl })
       end
       
       for profile_background_image_url in string.gmatch(html, '"profile_background_image_url":"(http[^"]+)"') do
-        backgroundimageurl = string.gsub(profile_background_image_url, "\/", "/")
+        local backgroundimageurl = string.gsub(profile_background_image_url, "\/", "/")
         table.insert(urls, { url=backgroundimageurl })
       end
       
