@@ -32,9 +32,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
     twitpicurl = "twitpic%.com/"..item_value
     
     if string.match(url, twitpicurl) then
-      if not html then
-        html = read_file(file)
-      end
+      html = read_file(file)
       
       for videourl in string.gmatch(html, '<meta name="twitter:player:stream" value="(http[^"]+)"') do
         table.insert(urls, { url=videourl })
