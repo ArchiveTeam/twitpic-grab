@@ -35,8 +35,9 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       html = read_file(file)
       
       for commentid in string.gmatch(html, '<div class="comment clear" data%-id="([0-9]+)">') do
-        local itemid = string.match(url, "twitpic%.com/([.]+)")
-        table.insert(urls, { url=("http://twitpic.com/comments/show.json?media_id="..itemid.."&last_seen="..commentid) })
+        for media_id in string.gmatch(url, "twitpic%.com/([.]+)") do
+          table.insert(urls, { url=("http://twitpic.com/comments/show.json?media_id="..media_id.."&last_seen="..commentid) })
+        end
       end
       
       for videourl in string.gmatch(html, '<meta name="twitter:player:stream" value="(http[^"]+)"') do
