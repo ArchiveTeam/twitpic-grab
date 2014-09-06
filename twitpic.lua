@@ -2,6 +2,7 @@ local url_count = 0
 local tries = 0
 local item_type = os.getenv('item_type')
 local item_value = os.getenv('item_value')
+local tagpage = 1
 dofile("urlcode.lua")
 dofile("table_show.lua")
 dofile("failure_report.lua")
@@ -120,6 +121,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
         end 
       end
     else
+      tagpage = 0
     end
   end
   
@@ -183,6 +185,12 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
         return false
       else
         return verdict
+      end
+    elseif string.match(url, "twitpic%.com/tag/[0-9a-zA-Z]+[/]?&page") then
+      if tagpage = 1 then
+        return verdict
+      else
+        return false
       end
     elseif string.match(url, item_value) then
       return verdict
