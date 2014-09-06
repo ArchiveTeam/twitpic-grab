@@ -121,8 +121,8 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
           end
         end 
       else
-        local page = string.match(url, "http://twitpic%.com/tag/[0-9a-zA-Z]+[/]?&page=([0-9]+)")
-        local tagid = string.match(url, "http://twitpic%.com/tag/([0-9a-zA-Z]+)[/]?&page=[0-9]+")
+        local page = string.match(url, "http://twitpic%.com/tag/[0-9a-zA-Z]+[/]?%?page=([0-9]+)")
+        local tagid = string.match(url, "http://twitpic%.com/tag/([0-9a-zA-Z]+)[/]?%?page=[0-9]+")
         local prevpage = page - 1
         local nextpage = page + 1
         local prevurlslash = "http://twitpic.com/tag/"..tagid.."/&page="..prevpage
