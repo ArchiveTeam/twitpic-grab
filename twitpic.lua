@@ -64,10 +64,10 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
         table.insert(urls, { url=nextpageurl })
       end
       
-      for prevpage in string.gmatch(html, '<div class="left">[^<]+<a href="(%?[^"]+)">[^<]+</a>[^<]+</div>') do
-        local prevpageurl = twitpicurl.."/"..prevpage
-        table.insert(urls, { url=prevpageurl })
-      end
+--      for prevpage in string.gmatch(html, '<div class="left">[^<]+<a href="(%?[^"]+)">[^<]+</a>[^<]+</div>') do
+--        local prevpageurl = twitpicurl.."/"..prevpage
+--        table.insert(urls, { url=prevpageurl })
+--      end
     end
   end
   
