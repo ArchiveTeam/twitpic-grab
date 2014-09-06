@@ -108,7 +108,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
     if string.match(url, item_value) then
       html = read_file(file)
       
-      if not string.match(html, '<div class="user%-photo%-content right">') then
+      if string.match(html, '<div class="user%-photo%-content right">') then
         for baseurl in string.gmatch(url, "(http://twitpic%.com/tag/[0-9a-zA-Z]+)") do
           for nextpage in string.gmatch(html, '<div class="right">[^<]+<a href="(%?[^"]+)">[^<]+</a>[^<]+</div>') do
             table.insert(urls, { url=(baseurl.."/"..nextpage) })
@@ -119,6 +119,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
           end
         end 
       end
+    else
     end
   end
   
