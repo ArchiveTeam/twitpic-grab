@@ -31,7 +31,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
     
     local twitpicurl = "twitpic%.com/"..item_value
     
-    if string.match(url, twitpicurl) then
+    if string.match(url, item_value) then
       html = read_file(file)
       
       for commentid in string.gmatch(html, '<div class="[^"]+" data-id="([0-9]+)">') do
