@@ -50,11 +50,13 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       html = read_file(file)
       
       for nextpage in string.gmatch(html, '<div class="right">[^<]+<a href="(%?[^"]+)">[^<]+</a>[^<]+</div>') do
-        table.insert(urls, { url=nextpage })
+        nextpageurl = twitpicurl.."/"..nextpage
+        table.insert(urls, { url=nextpageurl })
       end
       
       for prevpage in string.gmatch(html, '<div class="left">[^<]+<a href="(%?[^"]+)">[^<]+</a>[^<]+</div>') do
-        table.insert(ursl, { url=prevpage })
+        prevpageurl = twitpicurl.."/"..prevpage
+        table.insert(ursl, { url=prevpageurl })
       end
     end
   end
