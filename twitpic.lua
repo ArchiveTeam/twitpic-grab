@@ -4,8 +4,8 @@ local item_type = os.getenv('item_type')
 local item_value = os.getenv('item_value')
 dofile("urlcode.lua")
 dofile("table_show.lua")
+dofile("failure_report.lua")
 JSON = (loadfile "JSON.lua")()
-
 
 read_file = function(file)
   if file then
@@ -16,6 +16,12 @@ read_file = function(file)
   else
     return ""
   end
+end
+
+local admit_failure = function(status_code, url)
+  io.stdout:write("Giving up on "..url.."\n")
+  io.stdout:flush()
+  log_failure(status_code, url, os.getenv('downloader'), item_type, item_value)
 end
 
 wget.callbacks.get_urls = function(file, url, is_css, iri)
@@ -174,8 +180,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
       tries = tries + 1
       
       if tries >= 5 then
-        io.stdout:write("\nI give up...\n")
-        io.stdout:flush()
+        admit_failure(status_code, url.url)
         return wget.actions.NOTHING
       else
         return wget.actions.CONTINUE
@@ -189,8 +194,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
       tries = tries + 1
       
       if tries >= 5 then
-        io.stdout:write("\nI give up...\n")
-        io.stdout:flush()
+        admit_failure(status_code, url.url)
         return wget.actions.NOTHING
       else
         return wget.actions.CONTINUE
@@ -205,9 +209,8 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
     tries = tries + 1
     
     if tries >= 5 then
-      io.stdout:write("\nI give up...\n")
-      io.stdout:flush()
-      return wget.actions.ABORT
+      admit_failure(status_code, url.url)
+      return wget.actions.NOTHING
     else
       return wget.actions.CONTINUE
     end
