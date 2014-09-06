@@ -48,6 +48,32 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       for baseurl in string.match(url, "(http://api%.twitpic%.com/2/comments/show%.json%?media_id=[0-9a-z]+)") do
         table.insert(urls, { url=(baseurl.."&page=1") })
       end
+    elseif string.match(url, "http://twitpic%.com/comments/show%.json%?media_id=[^&]+&last_seen=[0-9]+") then
+      html = read_file(file)
+      
+      for commentid in string.gmatch(html, '{"id":"([^"]+)","media_id":"[^"]+"') do
+        for commentspage in string.gmatch(html, '{"id":"[^"]+","media_id":"([^"]+")') do
+          local newcomment = "http://twitpic.com/comments/show.json?media_id="..commentspage.."&last_seen="..commentid
+          if downloaded[newcomment] ~= true then
+            table.insert(urls, { url=newcomment })
+          end
+        end
+      end
+      
+      for avatar_url in string.gmatch(html, '"avatar_url":"(http[^"]+)"') do
+        avatarurl = string.gsub(avatar_url, "\/", "/")
+        if downloaded[avatarurl] ~= true then
+          table.insert(urls, { url=avatarurl })
+        end
+      end
+      
+      for profile_background_image_url in string.gmatch(html, '"profile_background_image_url":"(http[^"]+)"') do
+        backgroundimageurl = string.gsub(profile_background_image_url, "\/", "/")
+        if downloaded[backgroundimageurl] ~= true then
+          table.insert(urls { url=backgroundimageurl })
+        end
+      end
+      
     elseif string.match(url, "twitpic%.com/"..item_value.."[0-9a-z]") then
       html = read_file(file)
       
