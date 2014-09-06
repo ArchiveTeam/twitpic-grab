@@ -69,7 +69,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       for profile_background_image_url in string.gmatch(html, '"profile_background_image_url":"(http[^"]+)"') do
         backgroundimageurl = string.gsub(profile_background_image_url, "\/", "/")
         if downloaded[backgroundimageurl] ~= true then
-          table.insert(urls { url=backgroundimageurl })
+          table.insert(urls, { url=backgroundimageurl })
         end
       end
       
