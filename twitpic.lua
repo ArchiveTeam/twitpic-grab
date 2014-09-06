@@ -38,7 +38,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       html = read_file(file)
       
       if not string.match(html, '{"total_comments":"[0-9]+","total_pages":[0-9]+}') or
-        string.match(html, '"code":404[^"]+"message":false') then
+        not string.match(html, '"code":404[^"]+"message":false') then
         local page = string.match(url, "http://api%.twitpic%.com/2/comments/show%.json%?media_id=[^&]+&page=([0-9]+)")
         local newpage = page + 1
         local media_id = string.match(url, "http://api%.twitpic%.com/2/comments/show%.json%?media_id=([^&]+)&page=[0-9]+")
