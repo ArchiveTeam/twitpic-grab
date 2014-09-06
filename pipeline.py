@@ -57,7 +57,7 @@ if not WGET_LUA:
 #
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
-VERSION = "20140906.03"
+VERSION = "20140906.04"
 USER_AGENT = 'ArchiveTeam'
 TRACKER_ID = 'twitpic'
 TRACKER_HOST = 'tracker.archiveteam.org'
@@ -196,13 +196,15 @@ class WgetArgs(object):
         item['item_type'] = item_type
         item['item_value'] = item_value
         
-        assert item_type in ('image', 'user', 'tag')
+        assert item_type in ('image', 'user', 'tag', 'event')
         
         if item_type == 'image':
             suffixes = string.digits + string.lowercase
 
             for args in [('http://twitpic.com/{0}{1}'.format(item_value, s), \
                           'http://twitpic.com/show/thumb/{0}{1}'.format(item_value, s), \
+                          'http://api.twitpic.com/2/media/show.json?id={0}{1}'.format(item_value, s), \
+                          'http://api.twitpic.com/2/comments/show.json?media_id={0}{1}&page=1'.format(item_value, s), \
                           'http://twitpic.com/show/mini/{0}{1}'.format(item_value, s)) for s in suffixes]:
                 wget_args.append(args[0])
                 wget_args.append(args[1])
@@ -210,8 +212,14 @@ class WgetArgs(object):
 
         elif item_type == 'user':
             wget_args.append('http://twitpic.com/photos/{0}'.format(item_value))
+            wget_args.append('http://api.twitpic.com/2/users/show.json?username={0}'.format(item_value))
+            wget_args.append('http://api.twitpic.com/2/places/show.json?user={0}'.format(item_value))
+            wget_args.append('http://api.twitpic.com/2/events/show.json?user={0}'.format(item_value))
         elif item_type == 'tag':
             wget_args.append('http://twitpic.com/tag/{0}'.format(item_value))
+            wget_args.append('http://api.twitpic.com/2/tags/show.json?tag={0}'.format(item_value))
+        elif item_type == 'event':
+            wget_args.append('http://api.twitpic.com/2/event/show.json?id={0}'.format(item_value))
         else:
             raise Exception('Unknown item')
         
