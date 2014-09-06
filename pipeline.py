@@ -252,6 +252,7 @@ pipeline = Pipeline(
             "item_dir": ItemValue("item_dir"),
             "item_value": ItemValue("item_value"),
             "item_type": ItemValue("item_type"),
+            "downloader": downloader
         }
     ),
     PrepareStatsForTracker(
