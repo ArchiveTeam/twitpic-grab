@@ -44,7 +44,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
 --        table.insert(urls, { url=("http://api.twitpic.com/2/comments/show.json?media_id="..media_id.."&page="..newpage) })
 --      end
     if string.match(url, "http://api%.twitpic%.com/2/comments/show%.json%?media_id=[0-9a-z]+") then
-      for baseurl in string.match(url, "(http://api%.twitpic%.com/2/comments/show%.json%?media_id=[0-9a-z]+)") do
+      for baseurl in string.gmatch(url, "(http://api%.twitpic%.com/2/comments/show%.json%?media_id=[0-9a-z]+)") do
         table.insert(urls, { url=(baseurl.."&page=1") })
       end
     elseif string.match(url, "http://twitpic%.com/comments/show%.json%?media_id=[^&]+&last_seen=[0-9]+") then
