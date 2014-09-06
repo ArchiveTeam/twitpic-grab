@@ -32,7 +32,9 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
     twitpicurl = "twitpic%.com/"..item_value
     
     if string.match(url, twitpicurl) then
-      html = read_file(file)
+      if not html then
+        html = read_file(file)
+      end
       
       for videourl in string.gmatch(html, '<meta name="twitter:player:stream" value="(http[^"]+)"') do
         table.insert(urls, { url=videourl })
@@ -43,7 +45,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       end
       
       for imageurl in string.gmatch(html, '<meta name="twitter:image" value="(http[^"]+)"') do
-        table.insert(urls, { url=videosource })
+        table.insert(urls, { url=imageurl })
       end
       
       for commentid in string.gmatch(html, '<div class="[^"]+" data-id="[0-9]+">') do
