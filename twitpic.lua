@@ -18,6 +18,8 @@ read_file = function(file)
   end
 end
 
+local downloaded = {}
+
 local admit_failure = function(status_code, url)
   io.stdout:write("Giving up on "..url.."\n")
   io.stdout:flush()
@@ -31,7 +33,22 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
     
     local twitpicurl = "twitpic%.com/"..item_value
     
-    if string.match(url, "twitpic%.com/"..item_value.."[0-9a-z]") then
+    
+    if string.match(url, "http://api%.twitpic%.com/2/comments/show%.json%?media_id=[^&]+&page=[0-9]+") then
+      html = read_file(file)
+      
+      if not string.match(html, '{"total_comments":"[0-9]+","total_pages":[0-9]+}') or
+        string.match(html, '"code":404,"message":false') then
+        local page = string.match(url, "http://api%.twitpic%.com/2/comments/show%.json%?media_id=[^&]+&page=([0-9]+)")
+        local newpage = page + 1
+        local media_id = string.match(url, "http://api%.twitpic%.com/2/comments/show%.json%?media_id=([^&]+)&page=[0-9]+")
+        table.insert(urls, { url=("http://api.twitpic.com/2/comments/show.json?media_id="..media_id.."&page="..newpage) })
+      end
+    elseif string.match(url, "http://api%.twitpic%.com/2/comments/show%.json%?media_id=[0-9a-z]+") then
+      for baseurl in string.match(url, "(http://api%.twitpic%.com/2/comments/show%.json%?media_id=[0-9a-z]+)") do
+        table.insert(urls, { url=(baseurl.."&page=1") })
+      end
+    elseif string.match(url, "twitpic%.com/"..item_value.."[0-9a-z]") then
       html = read_file(file)
       
       for commentid in string.gmatch(html, '<div class="comment clear" data%-id="([0-9]+)">') do
@@ -51,21 +68,6 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       
       for imageurl in string.gmatch(html, '<meta name="twitter:image" value="(http[^"]+)"') do
         table.insert(urls, { url=imageurl })
-      end
-    end
-    
-    if string.match(url, "http://api.twitpic.com/2/comments/show.json%?media_id=[^&]+&page=[0-9]+") then
-      html = read_file(file)
-      
-      if not string.match(html, '{"total_comments":"[0-9]+","total_pages":[0-9]+}') then
-        local page = string.match(url, "http://api.twitpic.com/2/comments/show.json%?media_id=[^&]+&page=([0-9]+)")
-        local newpage = page + 1
-        local media_id = string.match(url, "http://api.twitpic.com/2/comments/show.json%?media_id=([^&]+)&page=[0-9]+")
-        table.insert(urls, { url=("http://api.twitpic.com/2/comments/show.json%?media_id="..media_id.."&page="..newpage) })
-      end
-    elseif string.match(url, "http://api.twitpic.com/2/comments/show.json?media_id=[0-9a-z]+") then
-      for baseurl in string.match(url, "(http://api.twitpic.com/2/comments/show.json?media_id=[0-9a-z]+)") do
-        table.insert(urls, { url=(baseurl.."&page=1") })
       end
     end
     
@@ -89,8 +91,6 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
     
   return urls
 end
-
-local downloaded = {}
 
 wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_parsed, iri, verdict, reason)
   local url = urlpos["url"]["url"]
