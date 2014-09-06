@@ -59,24 +59,22 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
         table.insert(urls, { url=(baseurl.."&page=1") })
       end
     elseif string.match(url, "http://twitpic%.com/comments/show%.json%?media_id=[^&]+&last_seen=[0-9]+") then
-      html = read_file(file)
+      json = load_json_file(file)
       
-      for commentid in string.gmatch(html, '{"id":"([^"]+)","media_id":"[^"]+"') do
-        for commentspage in string.gmatch(html, '{"id":"[^"]+","media_id":"([^"]+")') do
+      for commentid in string.gmatch(json, 'id = ["]?([0-9]+)["]?,[ ]?media_id = ["]?[0-9a-z]+["]?') do
+        for commentspage in string.gmatch(json, 'id = ["]?([^"]+)["]?,[ ]?media_id = ["]?([^"]+)["]?') do
           local newcomment = "http://twitpic.com/comments/show.json?media_id="..commentspage.."&last_seen="..commentid
           table.insert(urls, { url=newcomment })
         end
       end
       
---      for avatar_url in string.gmatch(html, '"avatar_url":"(http[^"]+)"') do
---        local avatarurl = string.gsub(avatar_url, "\/", "/")
---        table.insert(urls, { url=avatarurl })
---      end
+      for avatar_url in string.gmatch(json, 'avatar_url = "(http[^"]+)"') do
+        table.insert(urls, { url=avatarurl })
+      end
       
---      for profile_background_image_url in string.gmatch(html, '"profile_background_image_url":"(http[^"]+)"') do
---        local backgroundimageurl = string.gsub(profile_background_image_url, "\/", "/")
---        table.insert(urls, { url=backgroundimageurl })
---      end
+      for profile_background_image_url in string.gmatch(json, 'profile_background_image_url = "(http[^"]+)"') do
+        table.insert(urls, { url=backgroundimageurl })
+      end
       
     elseif string.match(url, "twitpic%.com/"..item_value.."[0-9a-z]") then
       html = read_file(file)
