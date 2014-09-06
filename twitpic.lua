@@ -42,8 +42,24 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
         table.insert(urls, { url=videosource })
       end
     end
+  elseif item_type == "tag" then
+    
+    twitpicurl = "twitpic%.com/tag/"..item_value
+    
+    if string.match(url, twitpicurl) then
+      html = read_file(file)
+      
+      for nextpage in string.gmatch(html, '<div class="right">[^<]+<a href="(%?[^"]+)">[^<]+</a>[^<]+</div>') do
+        table.insert(urls, { url=nextpage })
+      end
+      
+      for prevpage in string.gmatch(html, '<div class="left">[^<]+<a href="(%?[^"]+)">[^<]+</a>[^<]+</div>') do
+        table.insert(ursl, { url=prevpage })
+      end
+    end
   end
   
+    
   return urls
 end
 
