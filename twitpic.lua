@@ -47,8 +47,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       end
       
       for commentid in string.gmatch(html, '<div class="[^"]+" data-id="([0-9]+)">') do
-        local commenturl = "http://twitpic.com/comments/show.json?media_id="..item_value.."&last_seen="..commentid
-        table.insert(urls, { url=commenturl })
+        table.insert(urls, { url=("http://twitpic.com/comments/show.json?media_id="..item_value.."&last_seen="..commentid) })
       end
       
     end
@@ -60,14 +59,12 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       html = read_file(file)
       
       for nextpage in string.gmatch(html, '<div class="right">[^<]+<a href="(%?[^"]+)">[^<]+</a>[^<]+</div>') do
-        local nextpageurl = twitpicurl.."/"..nextpage
-        table.insert(urls, { url=nextpageurl })
+        table.insert(urls, { url=(twitpicurl.."/"..nextpage) })
       end
       
---      for prevpage in string.gmatch(html, '<div class="left">[^<]+<a href="(%?[^"]+)">[^<]+</a>[^<]+</div>') do
---        local prevpageurl = twitpicurl.."/"..prevpage
---        table.insert(urls, { url=prevpageurl })
---      end
+      for prevpage in string.gmatch(html, '<div class="left">[^<]+<a href="(%?[^"]+)">[^<]+</a>[^<]+</div>') do
+        table.insert(urls, { url=(twitpicurl.."/"..prevpage) })
+      end
     end
   end
   
