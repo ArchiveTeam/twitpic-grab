@@ -41,12 +41,18 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
   return urls
 end
 
+local downloaded = {}
+
 wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_parsed, iri, verdict, reason)
   local url = urlpos["url"]["url"]
   local ishtml = urlpos["link_expect_html"]
   local parenturl = parent["url"]
   local wgetreason = reason
-  
+
+  if downloaded[url] == true then
+    return false
+  end
+
   -- Chfoo - Can I use "local html = nil" in "wget.callbacks.download_child_p"?
   local html = nil
 
@@ -148,6 +154,11 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
   url_count = url_count + 1
   io.stdout:write(url_count .. "=" .. status_code .. " " .. url["url"] .. ".  \n")
   io.stdout:flush()
+
+  if status_code >= 200 and status_code <= 399 then
+    downloaded[url.url] = true
+  end
+
   if status_code >= 500 or
     (status_code >= 400 and status_code ~= 404 and status_code ~= 403) then
     if string.match(url["host"], "twitpic%.com") or
