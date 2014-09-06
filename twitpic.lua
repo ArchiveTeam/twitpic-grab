@@ -48,7 +48,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
         table.insert(urls, { url=imageurl })
       end
       
-      for commentid in string.gmatch(html, '<div class="[^"]+" data-id="[0-9]+">') do
+      for commentid in string.gmatch(html, '<div class="[^"]+" data-id="([0-9]+)">') do
         commenturl = "http://twitpic.com/comments/show.json?media_id="..item_value.."&last_seen="..commentid
         table.insert(urls, { url=commenturl })
       end
