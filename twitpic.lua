@@ -45,37 +45,41 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
     local twitpicurl = "twitpic%.com/"..item_value
     
     
---    if string.match(url, "http://api%.twitpic%.com/2/comments/show%.json%?media_id=[^&]+&page=[0-9]+") then
---      html = read_file(file)
---      
+    if string.match(url, "http://api%.twitpic%.com/2/comments/show%.json%?media_id=[^&]+&page=1") then
+      json = load_json_file(file)
+      
+      local numpages = json.total_pages
+      
+      while numpages ~= 0 do
+        local media_id = string.match(url, "http://api%.twitpic%.com/2/comments/show%.json%?media_id=([^&]+)&page=[0-9]+")
+        table.insert(urls, { url=("http://api.twitpic.com/2/comments/show.json?media_id="..media_id.."&page="..numpages) })
+        numpages = numpages - 1
+      end
+      
 --      if (string.match(html, '{"total_comments":"[0-9]+","total_pages":[0-9]+}') or string.match(html, '"code":404')) then
 --        local page = string.match(url, "http://api%.twitpic%.com/2/comments/show%.json%?media_id=[^&]+&page=([0-9]+)")
 --        local newpage = page + 1
 --        local media_id = string.match(url, "http://api%.twitpic%.com/2/comments/show%.json%?media_id=([^&]+)&page=[0-9]+")
 --        table.insert(urls, { url=("http://api.twitpic.com/2/comments/show.json?media_id="..media_id.."&page="..newpage) })
 --      end
-    if string.match(url, "http://api%.twitpic%.com/2/comments/show%.json%?media_id=[0-9a-z]+") then
-      for baseurl in string.gmatch(url, "(http://api%.twitpic%.com/2/comments/show%.json%?media_id=[0-9a-z]+)") do
-        table.insert(urls, { url=(baseurl.."&page=1") })
-      end
-    elseif string.match(url, "http://twitpic%.com/comments/show%.json%?media_id=[^&]+&last_seen=[0-9]+") then
-      json = load_json_file(file)
-      
-      for commentid in string.gmatch(json, 'id = ["]?([0-9]+)["]?,[ ]?media_id = ["]?[0-9a-z]+["]?') do
-        for commentspage in string.gmatch(json, 'id = ["]?([^"]+)["]?,[ ]?media_id = ["]?([^"]+)["]?') do
-          local newcomment = "http://twitpic.com/comments/show.json?media_id="..commentspage.."&last_seen="..commentid
-          table.insert(urls, { url=newcomment })
-        end
-      end
-      
-      for avatar_url in string.gmatch(json, 'avatar_url = "(http[^"]+)"') do
-        table.insert(urls, { url=avatarurl })
-      end
-      
-      for profile_background_image_url in string.gmatch(json, 'profile_background_image_url = "(http[^"]+)"') do
-        table.insert(urls, { url=backgroundimageurl })
-      end
-      
+--    elseif string.match(url, "http://twitpic%.com/comments/show%.json%?media_id=[^&]+&last_seen=[0-9]+") then
+--      json = load_json_file(file)
+--        
+--      for commentid in string.gmatch(json, 'id = ["]?([0-9]+)["]?,[ ]?media_id = ["]?[0-9a-z]+["]?') do
+--        for commentspage in string.gmatch(json, 'id = ["]?([^"]+)["]?,[ ]?media_id = ["]?([^"]+)["]?') do
+--          local newcomment = "http://twitpic.com/comments/show.json?media_id="..commentspage.."&last_seen="..commentid
+--          table.insert(urls, { url=newcomment })
+--        end
+--      end
+--      
+--      for avatar_url in string.gmatch(json, 'avatar_url = "(http[^"]+)"') do
+--        table.insert(urls, { url=avatarurl })
+--      end
+--      
+--      for profile_background_image_url in string.gmatch(json, 'profile_background_image_url = "(http[^"]+)"') do
+--        table.insert(urls, { url=backgroundimageurl })
+--      end
+--      
     elseif string.match(url, "twitpic%.com/"..item_value.."[0-9a-z]") then
       html = read_file(file)
       
