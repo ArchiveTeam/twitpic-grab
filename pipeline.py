@@ -216,6 +216,8 @@ class WgetArgs(object):
 
         elif item_type == 'user':
             wget_args.append('http://twitpic.com/photos/{0}'.format(item_value))
+            wget_args.append('http://twitpic.com/events/{0}'.format(item_value))
+            wget_args.append('http://twitpic.com/places/{0}'.format(item_value))
             wget_args.append('http://api.twitpic.com/2/users/show.json?username={0}'.format(item_value))
             wget_args.append('http://api.twitpic.com/2/places/show.json?user={0}'.format(item_value))
             wget_args.append('http://api.twitpic.com/2/events/show.json?user={0}'.format(item_value))
