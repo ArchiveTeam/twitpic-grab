@@ -57,7 +57,7 @@ if not WGET_LUA:
 #
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
-VERSION = "20140906.05"
+VERSION = "20140907.01"
 USER_AGENT = 'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; SLCC1; .NET CLR 2.0.50727; Media Center PC 5.0; .NET CLR 3.5.30729; .NET CLR 3.0.30618; MAXTHON 2.0)'
 TRACKER_ID = 'twitpic'
 TRACKER_HOST = 'tracker.archiveteam.org'
@@ -220,6 +220,7 @@ class WgetArgs(object):
         elif item_type == 'tag':
             wget_args.append('http://twitpic.com/tag/{0}'.format(item_value))
             wget_args.append('http://api.twitpic.com/2/tags/show.json?tag={0}'.format(item_value))
+            wget_args.append('http://twitpic.com/tag/{0}.json'.format(item_value))
         elif item_type == 'event':
             wget_args.append('http://api.twitpic.com/2/event/show.json?id={0}'.format(item_value))
         else:
