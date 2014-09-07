@@ -139,7 +139,7 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
     end
   elseif item_type == "user" then
     if string.match(url, "twitpic%.com/events/[0-9a-zA-Z]+") then
-      html = load_file(file)
+      html = read_file(file)
       
       for eventurl in string.gmatch(html, '<a href="(http[s]?://[^/]+/e/[^"]+)">') do
         table.insert(urls, { url=eventurl })
