@@ -138,12 +138,12 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       end
     end
   elseif item_type == "user" then
-    if string.match(url, "twitpic%.com/event/[0-9a-zA-Z]+") then
+    if string.match(url, "twitpic%.com/events/[0-9a-zA-Z]+") then
       html = load_file(file)
       
       for eventurl in string.gmatch(html, '<a href="(http[s]?://[^/]+/e/[^"]+)">') do
         table.insert(urls, { url=eventurl })
-        for eventjson in string.gmatch(eventurl, "/e/([0-9a-zA-Z])") do
+        for eventjson in string.gmatch(eventurl, "/e/([0-9a-zA-Z]+)") do
           table.insert(urls, { url=("http://api.twitpic.com/2/event/show.json?id="..eventjson) })
         end
       end
@@ -198,7 +198,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       string.match(url, '/[^"]+"') then
       return false
     elseif string.match(url, "/e/") then
-      return verdict
+      return true
     elseif string.match(url, "cloudfront%.net") or
       string.match(url, "twimg%.com")  or
       string.match(url, "amazonaws%.com") then
