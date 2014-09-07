@@ -143,11 +143,14 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       
       for eventurl in string.gmatch(html, '<a href="(http[s]?://[^/]+/e/[^"]+)">') do
         table.insert(urls, { url=eventurl })
-        for eventjson in string.gmatch(eventurl, "/e/([0-9a-zA-Z]+)") do
-          table.insert(urls, { url=("http://api.twitpic.com/2/event/show.json?id="..eventjson) })
-        end
       end
     end
+    
+    for eventjson in string.gmatch(url, "/e/([0-9a-zA-Z]+)") do
+      local eventjsonurl = "http://api.twitpic.com/2/event/show.json?id="..eventjson
+      table.insert(urls, { url=eventjsonurl })
+    end
+      
   end
   
   return urls
