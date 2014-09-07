@@ -150,6 +150,20 @@ wget.callbacks.get_urls = function(file, url, is_css, iri)
       local eventjsonurl = "http://api.twitpic.com/2/event/show.json?id="..eventjson
       table.insert(urls, { url=eventjsonurl })
     end
+    
+    if string.match(url, "twitpic%.com/places/[0-9a-zA-Z]+") then
+      html = read_file(file)
+      for placeurl in string.gmatch(html, '<a href="(http[s]?://[^/]+/place/[^/]+/[^"]+)">') do
+        table.insert(urls, { url=placeurl })
+      end
+    end
+    
+    for placejson in string.gmatch(url, "/place/[^/]+/([0-9a-zA-Z]+)") do
+      local placejsonurl = "http://api.twitpic.com/2/place/show.json?id="..placejson
+      local placeurl = "http://twitpic.com/place/"..placejson
+      table.insert(urls, { url=placejsonurl })
+      table.insert(urls, { url=placeurl })
+    end
       
   end
   
@@ -199,6 +213,8 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       string.match(url, '/[^"]+"') then
       return false
     elseif string.match(url, "/e/") then
+      return true
+    elseif string.match(url, "/place/") then
       return true
     elseif string.match(url, "%.json") then
       return true
