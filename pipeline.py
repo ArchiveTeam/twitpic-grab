@@ -303,12 +303,12 @@ class WgetArgs(object):
         if item_type == 'image':
             suffixes = string.digits + string.lowercase
 
-            for args in [('http://twitpic.com/{0}{1}'.format(item_value, s), \
-                          'http://twitpic.com/show/thumb/{0}{1}'.format(item_value, s), \
+            for args in [('http://twitpic.com/show/thumb/{0}{1}'.format(item_value, s), \
                           'http://twitpic.com/show/large/{0}{1}'.format(item_value, s), \
+                          'http://twitpic.com/show/mini/{0}{1}'.format(item_value, s), \
+                          'http://twitpic.com/{0}{1}'.format(item_value, s), \
                           'http://api.twitpic.com/2/media/show.json?id={0}{1}'.format(item_value, s), \
-                          'http://api.twitpic.com/2/comments/show.json?media_id={0}{1}&page=1'.format(item_value, s), \
-                          'http://twitpic.com/show/mini/{0}{1}'.format(item_value, s)) for s in suffixes]:
+                          'http://api.twitpic.com/2/comments/show.json?media_id={0}{1}&page=1'.format(item_value, s)) for s in suffixes]:
                 wget_args.append(args[0])
                 wget_args.append(args[1])
                 wget_args.append(args[2])
