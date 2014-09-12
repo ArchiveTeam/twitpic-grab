@@ -152,7 +152,6 @@ USER_AGENTS = [
 ]
 TRACKER_ID = 'twitpic'
 TRACKER_HOST = 'tracker.archiveteam.org'
-ACCEPT_LANGUAGE_HEADER = random.choice([
 
 ACCEPT_LANGUAGE_HEADERS = [
     "Accept-Language: en-CA,en;q=0.8,en-US;q=0.6,en-GB;q=0.4",
