@@ -298,6 +298,11 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
       string.match(url["host"], "twimg%.com") or
       string.match(url["host"], "amazonaws%.com") then
       
+      if status_code == 403 then
+        admit_failure(status_code, url.url)
+        return wget.actions.NOTHING
+      end
+      
       io.stdout:write("\nServer returned "..http_stat.statcode.." for " .. url["url"] .. ". Sleeping.\n")
       io.stdout:flush()
       
