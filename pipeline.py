@@ -311,8 +311,6 @@ class WgetArgs(object):
                 wget_args.append(args[1])
                 wget_args.append(args[2])
                 wget_args.append(args[3])
-                wget_args.append(args[4])
-                wget_args.append(args[5])
 
         elif item_type == 'user':
             wget_args.append('http://twitpic.com/photos/{0}'.format(item_value))
