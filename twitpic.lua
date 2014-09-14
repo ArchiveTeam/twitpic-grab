@@ -264,8 +264,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
       string.match(url["host"], "amazonaws%.com") then
       
       if status_code == 403 then
-        admit_failure(status_code, url.url)
-        return wget.actions.NOTHING
+        return wget.actions.ABORT
       end
       
       io.stdout:write("\nServer returned "..http_stat.statcode.." for " .. url["url"] .. ". Sleeping.\n")
@@ -276,8 +275,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
       tries = tries + 1
       
       if tries >= 5 then
-        admit_failure(status_code, url.url)
-        return wget.actions.NOTHING
+        return wget.actions.ABORT
       else
         return wget.actions.CONTINUE
       end
@@ -290,7 +288,6 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
       tries = tries + 1
       
       if tries >= 5 then
-        admit_failure(status_code, url.url)
         return wget.actions.NOTHING
       else
         return wget.actions.CONTINUE
@@ -305,8 +302,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
     tries = tries + 1
     
     if tries >= 5 then
-      admit_failure(status_code, url.url)
-      return wget.actions.NOTHING
+      return wget.actions.ABORT
     else
       return wget.actions.CONTINUE
     end
