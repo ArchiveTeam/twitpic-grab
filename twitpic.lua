@@ -256,7 +256,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
   
   -- consider 403 as banned from twitpic, not pernament failure
   if status_code >= 500 or
-    (status_code >= 400 and status_code ~= 404) or
+    (status_code >= 400 and status_code ~= 404 and status_code ~= 403) or
     (status_code == 403 and string.match(url["host"], "twitpic%.com")) then
     if string.match(url["host"], "twitpic%.com") then
       
