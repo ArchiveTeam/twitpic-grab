@@ -179,7 +179,6 @@ class CheckIP(SimpleTask):
         # Check if we are banned from twitpic
         check = requests.get('http://twitpic.com/2')
         if check.status_code == 403:
-            item.log_output('Got IP addresses: {0}'.format(ip_set))
             item.log_output('You are banned from Twitpic! Please try to use an other IP.')
             raise Exception('You are banned from Twitpic! Please try to use an other IP.')
         
