@@ -57,7 +57,7 @@ if not WGET_LUA:
 #
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
-VERSION = "20140915.01"
+VERSION = "20140915.02"
 USER_AGENTS = [
     'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; SLCC1; .NET CLR 2.0.50727; Media Center PC 5.0; .NET CLR 3.5.30729; .NET CLR 3.0.30618; MAXTHON 2.0)',
     'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)',
@@ -191,9 +191,9 @@ class CheckIP(SimpleTask):
             if len(ip_set) != 6:
                 item.log_output('Got IP addresses: {0}'.format(ip_set))
                 item.log_output(
-                    'Are you behind a firewall/proxy? That is a big no-no!')
+                    'You are banned from Twitpic or are behind a proxy! Please try ro use an other IP.')
                 raise Exception(
-                    'Are you behind a firewall/proxy? That is a big no-no!')
+                    'You are banned from Twitpic or are behind a proxy! Please try ro use an other IP.')
 
         # Check only occasionally
         if self._counter <= 0:
