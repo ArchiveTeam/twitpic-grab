@@ -15,7 +15,7 @@ import subprocess
 import sys
 import time
 import string
-import requests
+import urllib
 
 import seesaw
 from seesaw.externalprocess import WgetDownload
@@ -58,7 +58,7 @@ if not WGET_LUA:
 #
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
-VERSION = "20140915.05"
+VERSION = "20140915.06"
 USER_AGENTS = [
     'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; SLCC1; .NET CLR 2.0.50727; Media Center PC 5.0; .NET CLR 3.5.30729; .NET CLR 3.0.30618; MAXTHON 2.0)',
     'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)',
@@ -177,8 +177,9 @@ class CheckIP(SimpleTask):
     def process(self, item):
         # NEW for 2014! Check if we are behind firewall/proxy
         # Check if we are banned from twitpic
-        check = requests.get('http://twitpic.com/2')
-        if check.status_code == 403:
+        check = urllib.urlopen('http://twitpic.com/2')
+        check.getcode()
+        if check == 403:
             item.log_output('You are banned from Twitpic! Please try to use an other IP.')
             raise Exception('You are banned from Twitpic! Please try to use an other IP.')
         
