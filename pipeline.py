@@ -191,9 +191,9 @@ class CheckIP(SimpleTask):
             if len(ip_set) != 6:
                 item.log_output('Got IP addresses: {0}'.format(ip_set))
                 item.log_output(
-                    'You are banned from Twitpic or are behind a proxy! Please try ro use an other IP.')
+                    'You are banned from Twitpic or are behind a proxy! Please try to use an other IP.')
                 raise Exception(
-                    'You are banned from Twitpic or are behind a proxy! Please try ro use an other IP.')
+                    'You are banned from Twitpic or are behind a proxy! Please try to use an other IP.')
 
         # Check only occasionally
         if self._counter <= 0:
