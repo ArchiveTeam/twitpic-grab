@@ -155,7 +155,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     elseif string.match(url, "/tag/") then
       return false
     elseif string.match(url, "cloudfront%.net") then
-      return false
+      return false  -- handled by twitpic-cloudfront-grab project
     elseif string.match(url, "twimg%.com") or string.match(url, "amazonaws%.com") then
       return verdict
     elseif string.match(url, "advertise%.twitpic%.com") then
@@ -186,7 +186,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     elseif string.match(url, "%.json") then
       return true
     elseif string.match(url, "cloudfront%.net") then
-      return false
+      return false -- handled by twitpic-cloudfront-grab project
     elseif string.match(url, "twimg%.com") or string.match(url, "api%.twitpic%.com") or string.match(url, "amazonaws%.com") then
       return verdict
     elseif string.match(url, "advertise%.twitpic%.com") then
@@ -217,7 +217,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       string.match(url, '/[^"]+"') then
       return false
     elseif string.match(url, "cloudfront%.net") then
-      return false
+      return false  -- handled by twitpic-cloudfront-grab project
     elseif string.match(url, "twimg%.com") or string.match(url, "amazonaws%.com") then
       return verdict
     elseif string.match(url, "advertise%.twitpic%.com") then
@@ -304,6 +304,9 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
     else
       return wget.actions.CONTINUE
     end
+  elseif status_code == 302 and string.match(url["host"], "twitpic%.com") and string.match(url["url"], "/show/") then
+    -- handled by twitpic-cloudfront-grab project
+    return wget.actions.EXIT
   end
 
   tries = 0
