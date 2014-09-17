@@ -154,9 +154,9 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       return false
     elseif string.match(url, "/tag/") then
       return false
-    elseif string.match(url, "cloudfront%.net") or
-      string.match(url, "twimg%.com")  or
-      string.match(url, "amazonaws%.com") then
+    elseif string.match(url, "cloudfront%.net") then
+      return false
+    elseif string.match(url, "twimg%.com") or string.match(url, "amazonaws%.com") then
       return verdict
     elseif string.match(url, "advertise%.twitpic%.com") then
       return false
@@ -185,10 +185,9 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       return true
     elseif string.match(url, "%.json") then
       return true
-    elseif string.match(url, "cloudfront%.net") or
-      string.match(url, "twimg%.com")  or
-      string.match(url, "api%.twitpic%.com")  or
-      string.match(url, "amazonaws%.com") then
+    elseif string.match(url, "cloudfront%.net") then
+      return false
+    elseif string.match(url, "twimg%.com") or string.match(url, "api%.twitpic%.com") or string.match(url, "amazonaws%.com") then
       return verdict
     elseif string.match(url, "advertise%.twitpic%.com") then
       return false
