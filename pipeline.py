@@ -58,7 +58,7 @@ if not WGET_LUA:
 #
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
-VERSION = "20140917.01"
+VERSION = "20140917.02"
 USER_AGENTS = [
     'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; SLCC1; .NET CLR 2.0.50727; Media Center PC 5.0; .NET CLR 3.5.30729; .NET CLR 3.0.30618; MAXTHON 2.0)',
     'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)',
@@ -273,6 +273,7 @@ project = Project(
         <img class="project-logo" alt="Project logo" src="http://archiveteam.org/images/6/68/Twitpic-logo.png" height="50px" title=""/>
         <h2>twitpic.com <span class="links"><a href="http://twitpic.com/">Website</a> &middot; <a href="http://tracker.archiveteam.org/twitpic/">Leaderboard</a></span></h2>
         <p>Archiving images and webpages from twitpic.com.</p>
+        <p class="projectBroadcastMessage">Please use only concurrency of 1 to avoid overloading Twitpic.</p>
     """,
     utc_deadline=datetime.datetime(2014, 9, 25, 23, 59, 0)
 )
