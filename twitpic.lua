@@ -144,6 +144,13 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
   if downloaded[url] == true then
     return false
   end
+  
+  if string.match(url, "https://") then
+    local newurl = string.gsub(url, "https://", "http://")
+    if downloaded[newurl] == true then
+      return false
+    end
+  end
 
   -- Chfoo - Can I use "local html = nil" in "wget.callbacks.download_child_p"?
   local html = nil
