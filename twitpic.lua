@@ -280,7 +280,8 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
       tries = tries + 1
       
       if tries >= 5 then
-        return wget.actions.ABORT
+        tries = 0
+        return wget.actions.NOTHING
       else
         return wget.actions.CONTINUE
       end
@@ -293,6 +294,7 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
       tries = tries + 1
       
       if tries >= 5 then
+        tries = 0
         return wget.actions.NOTHING
       else
         return wget.actions.CONTINUE
@@ -307,7 +309,8 @@ wget.callbacks.httploop_result = function(url, err, http_stat)
     tries = tries + 1
     
     if tries >= 5 then
-      return wget.actions.ABORT
+      tries = 0
+      return wget.actions.NOTHING
     else
       return wget.actions.CONTINUE
     end
