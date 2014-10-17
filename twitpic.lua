@@ -150,6 +150,12 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       else
         return verdict
       end
+--    elseif string.match(url, item_value.."[0-9a-zA-Z][0-9a-zA-Z][0-9a-zA-Z]") then
+--      if ishtml == 1 then
+--        return false
+--      else
+--        return verdict
+--      end
     elseif string.match(url, item_value) then
       return verdict
     else
