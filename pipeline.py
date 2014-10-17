@@ -58,7 +58,7 @@ if not WGET_LUA:
 #
 # Update this each time you make a non-cosmetic change.
 # It will be added to the WARC files and reported to the tracker.
-VERSION = "20141017.04"
+VERSION = "20141017.05"
 USER_AGENTS = [
     'Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; Trident/4.0; SLCC1; .NET CLR 2.0.50727; Media Center PC 5.0; .NET CLR 3.5.30729; .NET CLR 3.0.30618; MAXTHON 2.0)',
     'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)',
@@ -228,11 +228,9 @@ class WgetArgs(object):
             suffixes = string.digits + string.lowercase
 
             for args in [('http://twitpic.com/show/large/{0}{1}'.format(item_value, s), \
-                          'http://twitpic.com/show/mini/{0}{1}'.format(item_value, s), \
                           'http://twitpic.com/{0}{1}'.format(item_value, s)) for s in suffixes]:
                 wget_args.append(args[0])
                 wget_args.append(args[1])
-                wget_args.append(args[2])
 
         elif item_type == 'user':
             wget_args.append('http://twitpic.com/photos/{0}'.format(item_value))
