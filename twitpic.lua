@@ -127,6 +127,12 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
   local html = nil
 
   if item_type == "image" then
+    -- REMOVE THE elseif cloudfront PART AND UNCOMMENT THE COMMENTED LINES BELOW:
+--    if not (string.match(item_value, "8[9a-zA-Z][O-Z][Q-Z][G-Z]") or string.match(item_value, "9[0-9a-zA-Z][0-9a-zA-Z][0-9a-zA-Z][0-9a-zA-Z]")) then
+--      if string.match(url, "cloudfront%.net") then
+--        return false
+--      end
+--    end
     if string.match(url, "/%%5C%%22") or
       string.match(url, '/[^"]+"') then
       return false
