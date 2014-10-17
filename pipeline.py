@@ -228,8 +228,14 @@ class WgetArgs(object):
         if item_type == 'image':
             suffixes = string.digits + string.lowercase
 
-            for url in ['http://twitpic.com/{0}{1}'.format(item_value, s) for s in suffixes]:
-                wget_args.append(url)
+            for args in [('http://twitpic.com/show/thumb/{0}{1}'.format(item_value, s), \
+                          'http://twitpic.com/show/large/{0}{1}'.format(item_value, s), \
+                          'http://twitpic.com/show/mini/{0}{1}'.format(item_value, s), \
+                          'http://twitpic.com/{0}{1}'.format(item_value, s)) for s in suffixes]:
+                wget_args.append(args[0])
+                wget_args.append(args[1])
+                wget_args.append(args[2])
+                wget_args.append(args[3])
 
         elif item_type == 'user':
             wget_args.append('http://twitpic.com/photos/{0}'.format(item_value))

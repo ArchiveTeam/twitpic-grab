@@ -40,7 +40,36 @@ end
 wget.callbacks.get_urls = function(file, url, is_css, iri)
   local urls = {}
   
-  if item_type == "tag" then
+  if item_type == "image" then
+    
+    local twitpicurl = "twitpic%.com/"..item_value
+    
+    
+    if string.match(url, "twitpic%.com/"..item_value.."[0-9a-z]") then
+      html = read_file(file)
+      
+--      for commentid in string.gmatch(html, '<div class="comment clear" data%-id="([0-9]+)">') do
+--        for commentspage in string.gmatch(url, "twitpic%.com/"..item_value.."[0-9a-z]") do
+--          local media_id = string.match(commentspage, "twitpic%.com/([0-9a-z]+)")
+--          table.insert(urls, { url=("http://twitpic.com/comments/show.json?media_id="..media_id.."&last_seen="..commentid) })
+--        end
+--      end
+      
+      for videourl in string.gmatch(html, '<meta name="twitter:player:stream" value="(http[^"]+)"') do
+        table.insert(urls, { url=videourl })
+      end
+      
+      for videosource in string.gmatch(html, '<source src="(http[^"]+)"') do
+        table.insert(urls, { url=videosource })
+      end
+      
+      for imageurl in string.gmatch(html, '<meta name="twitter:image" value="(http[^"]+)"') do
+        table.insert(urls, { url=imageurl })
+      end
+    end
+    
+  elseif item_type == "tag" then
+    
     if string.match(url, item_value) then
       html = read_file(file)
       
@@ -134,10 +163,8 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       return false
     elseif string.match(url, "cloudfront%.net") then
       return false  -- handled by twitpic-cloudfront-grab project
-    elseif string.match(url, "twitpic.com/show/thumb") then
-      return false  -- ditto
     elseif string.match(url, "twimg%.com") or string.match(url, "amazonaws%.com") then
-      return false  -- ditto
+      return verdict
     elseif string.match(url, "advertise%.twitpic%.com") then
       return false
     elseif not string.match(url, "twitpic%.com") then
@@ -168,7 +195,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     elseif string.match(url, "cloudfront%.net") then
       return false -- handled by twitpic-cloudfront-grab project
     elseif string.match(url, "twimg%.com") or string.match(url, "api%.twitpic%.com") or string.match(url, "amazonaws%.com") then
-      return false  -- ditto
+      return verdict
     elseif string.match(url, "advertise%.twitpic%.com") then
       return false
     elseif not string.match(url, "twitpic%.com") then
@@ -199,7 +226,7 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
     elseif string.match(url, "cloudfront%.net") then
       return false  -- handled by twitpic-cloudfront-grab project
     elseif string.match(url, "twimg%.com") or string.match(url, "amazonaws%.com") then
-      return false  -- ditto
+      return verdict
     elseif string.match(url, "advertise%.twitpic%.com") then
       return false
     elseif not string.match(url, "twitpic%.com") then
