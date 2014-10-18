@@ -156,9 +156,9 @@ wget.callbacks.download_child_p = function(urlpos, parent, depth, start_url_pars
       else
         return verdict
       end
---    elseif (string.match(url, "http[s]?://twitpic%.com/"..item_value.."[0-9a-zA-Z][0-9a-zA-Z][0-9a-zA-Z]") and not string.match(url, "http[s]?://twitpic%.com/[^/]+/"))
---      or string.match(url, "http[s]?://twitpic%.com/"..item_value.."[0-9a-zA-Z][0-9a-zA-Z][0-9a-zA-Z]+/full")
---      or string.match(url, "http[s]?://twitpic%.com/"..item_value.."/show/[^/]+/[0-9a-zA-Z][0-9a-zA-Z][0-9a-zA-Z]") then
+--    elseif (string.match(url, "http[s]?://twitpic%.com/"..item_value.."[0-9a-zA-Z][0-9a-zA-Z]") and not string.match(url, "http[s]?://twitpic%.com/[^/]+/"))
+--      or string.match(url, "http[s]?://twitpic%.com/"..item_value.."[0-9a-zA-Z][0-9a-zA-Z]+/full")
+--      or string.match(url, "http[s]?://twitpic%.com/"..item_value.."/show/[^/]+/[0-9a-zA-Z][0-9a-zA-Z]") then
 --      if ishtml == 1 then
 --        return false
 --      else
