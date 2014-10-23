@@ -267,8 +267,8 @@ project = Project(
     project_html="""
         <img class="project-logo" alt="Project logo" src="http://archiveteam.org/images/6/68/Twitpic-logo.png" height="50px" title=""/>
         <h2>twitpic.com <span class="links"><a href="http://twitpic.com/">Website</a> &middot; <a href="http://tracker.archiveteam.org/twitpic/">Leaderboard</a></span></h2>
-        <p>Archiving images and webpages from twitpic.com.</p>
-        <p class="projectBroadcastMessage">Please use only concurrency of 1 to avoid overloading Twitpic.</p>
+        <p>Archiving <!--images and--> webpages from twitpic.com.</p>
+        <!--<p class="projectBroadcastMessage"></p>-->
     """,
     utc_deadline=datetime.datetime(2014, 9, 25, 23, 59, 0)
 )
